@@ -8,19 +8,20 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(unique = true, nullable = false, length = 30)
-    private String username;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(nullable = false)
-    private String password;
+  @Column(unique = true, nullable = false, length = 30)
+  private String username;
 
-    @Column(length = 100)
-    private String name;
+  @Column(nullable = false)
+  private String password;
 
-    @Column(length = 100)
-    private String surname;
+  @Column(length = 100)
+  private String name;
+
+  @Column(length = 100)
+  private String surname;
 }

@@ -9,21 +9,22 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "sprint_ticket")
 public class SprintTicket {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(nullable = false)
-    private Long sprint_id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-    @Column(nullable = false)
-    private Long ticket_id;
+  @Column(nullable = false)
+  private Long sprint_id;
 
-    @ManyToOne
-    @JoinColumn(name = "sprint_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Sprint sprint;
+  @Column(nullable = false)
+  private Long ticket_id;
 
-    @ManyToOne
-    @JoinColumn(name = "ticket_id", referencedColumnName = "id", insertable = false, updatable = false)
-    private Ticket ticket;
+  @ManyToOne
+  @JoinColumn(name = "sprint_id", referencedColumnName = "id", insertable = false, updatable = false)
+  private Sprint sprint;
+
+  @ManyToOne
+  @JoinColumn(name = "ticket_id", referencedColumnName = "id", insertable = false, updatable = false)
+  private Ticket ticket;
 }
