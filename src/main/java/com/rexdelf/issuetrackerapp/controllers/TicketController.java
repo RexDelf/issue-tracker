@@ -29,8 +29,6 @@ public class TicketController {
 
   @GetMapping
   public ResponseEntity<List<TicketDto>> getAll() {
-    modelMapper.addConverter(converter);
-
     List<Ticket> tickets = ticketService.findAll();
 
     List<TicketDto> ticketsDto = tickets.stream()
@@ -39,24 +37,4 @@ public class TicketController {
 
     return new ResponseEntity<>(ticketsDto, HttpStatus.OK);
   }
-
-  Converter<Ticket, TicketDto> converter = new AbstractConverter<>() {
-    @Override
-    protected TicketDto convert(Ticket source) {
-      TicketDto destination = new TicketDto();
-
-      destination.setId(source.getId());
-      destination.setTitle(source.getTitle());
-      destination.setDescription(source.getDescription());
-      destination.setReporterName(source.getReporter().getName());
-      destination.setReporterSurname(source.getReporter().getSurname());
-      destination.setAssigneeName(source.getAssignee().getName());
-      destination.setAssigneeSurname(source.getAssignee().getSurname());
-      destination.setStatus(source.getStatus().getName());
-      destination.setCreatedAt(source.getCreatedAt());
-      destination.setPriority(source.getPriority().getName());
-
-      return destination;
-    }
-  };
 }
