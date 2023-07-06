@@ -14,11 +14,11 @@ public class SprintTicket {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(nullable = false)
-  private Long sprint_id;
+  @Column(name = "sprint_id", nullable = false)
+  private Long sprintId;
 
-  @Column(nullable = false)
-  private Long ticket_id;
+  @Column(name = "ticket_id", nullable = false)
+  private Long ticketId;
 
   @ManyToOne
   @JoinColumn(name = "sprint_id", referencedColumnName = "id", insertable = false, updatable = false)

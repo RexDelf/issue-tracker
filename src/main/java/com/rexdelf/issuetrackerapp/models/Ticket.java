@@ -21,19 +21,20 @@ public class Ticket {
   @Column(columnDefinition = "TEXT")
   private String description;
 
-  @Column(nullable = false)
-  private Long reporter_id;
+  @Column(name = "reporter_id", nullable = false)
+  private Long reporterId;
 
-  private Long assignee_id;
+  @Column(name = "assignee_id")
+  private Long assigneeId;
 
-  @Column(nullable = false)
-  private Long status_id;
-
-  @Column(nullable = false)
-  private LocalDateTime created_at;
+  @Column(name = "status_id", nullable = false)
+  private Long statusId;
 
   @Column(nullable = false)
-  private Long priority_id;
+  private LocalDateTime createdAt;
+
+  @Column(name = "priority_id", nullable = false)
+  private Long priorityId;
 
   @ManyToOne
   @JoinColumn(name = "reporter_id", referencedColumnName = "id", insertable = false, updatable = false)

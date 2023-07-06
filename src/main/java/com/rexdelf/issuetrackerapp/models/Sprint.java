@@ -19,10 +19,10 @@ public class Sprint {
   private String name;
 
   @Column(nullable = false)
-  private LocalDate start_date;
+  private LocalDate startDate;
 
   @Column(nullable = false)
-  private LocalDate end_date;
+  private LocalDate endDate;
 
   @Column(nullable = false, columnDefinition = "TEXT")
   private String goals;
