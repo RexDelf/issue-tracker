@@ -1,0 +1,20 @@
+openapi: "3.0.0"
+info:
+  title: Issue Tracker API
+  version: 0.2.0
+paths:
+  /tickets:
+    get:
+      summary: get all tickets
+      operationId: getAll
+      tags:
+        - tickets
+      responses:
+        '200':
+          description: A list of TicketDto objects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './dto/TicketDto.yaml'
