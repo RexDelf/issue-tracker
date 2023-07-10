@@ -2,6 +2,9 @@ package com.rexdelf.issuetrackerapp.config;
 
 import com.rexdelf.issuetrackerapp.dto.TicketDto;
 import com.rexdelf.issuetrackerapp.models.Ticket;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -33,7 +36,7 @@ public class ModelMapperConfiguration {
         destination.setAssigneeName(source.getAssignee().getName());
         destination.setAssigneeSurname(source.getAssignee().getSurname());
         destination.setStatus(source.getStatus().getName());
-        destination.setCreatedAt(source.getCreatedAt());
+        destination.setCreatedAt(OffsetDateTime.of(source.getCreatedAt(), ZoneOffset.UTC));
         destination.setPriority(source.getPriority().getName());
 
         return destination;
