@@ -107,7 +107,7 @@
               </inputSpec>
               <generatorName>spring</generatorName>
               <apiPackage>com.rexdelf.issuetrackerapp.controllers</apiPackage>
-              <modelPackage>com.rexdelf.issuetrackerapp.models</modelPackage>
+              <modelPackage>com.rexdelf.issuetrackerapp.dto</modelPackage>
               <supportingFilesToGenerate>
                 ApiUtil.java
               </supportingFilesToGenerate>
