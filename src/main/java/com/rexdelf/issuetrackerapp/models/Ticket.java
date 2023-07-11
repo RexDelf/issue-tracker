@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import org.springframework.data.annotation.CreatedDate;
 
 @Data
 @NoArgsConstructor
@@ -31,6 +32,7 @@ public class Ticket {
   private Long statusId;
 
   @Column(nullable = false)
+  @CreatedDate
   private LocalDateTime createdAt;
 
   @Column(name = "priority_id", nullable = false)
