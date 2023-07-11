@@ -10,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.internal.util.Assert;
 
 @ExtendWith(MockitoExtension.class)
 class TicketServiceImplTest {
