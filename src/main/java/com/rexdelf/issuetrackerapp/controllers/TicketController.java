@@ -50,8 +50,6 @@ public class TicketController implements TicketsApi {
         .buildAndExpand(savedTicket.getId())
         .toUriString();
 
-    System.out.println(savedTicket);
-
     return ResponseEntity.status(CREATED)
         .header(HttpHeaders.LOCATION, location)
         .body(mapper.ticketToTicketPostResponseDto(savedTicket));
