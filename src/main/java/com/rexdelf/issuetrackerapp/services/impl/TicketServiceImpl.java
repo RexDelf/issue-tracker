@@ -15,7 +15,6 @@ public class TicketServiceImpl implements TicketService {
 
   private final TicketRepository ticketRepository;
 
-  @Transactional
   public void save(Ticket ticket){
     ticketRepository.save(ticket);
   }
