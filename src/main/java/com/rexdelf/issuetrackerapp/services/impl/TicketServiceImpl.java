@@ -15,8 +15,8 @@ public class TicketServiceImpl implements TicketService {
 
   private final TicketRepository ticketRepository;
 
-  public void save(Ticket ticket){
-    ticketRepository.save(ticket);
+  public Ticket save(Ticket ticket){
+    return ticketRepository.save(ticket);
   }
 
   public List<Ticket> findAll() {

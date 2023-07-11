@@ -7,5 +7,5 @@ import java.util.List;
 public interface TicketService {
   List<Ticket> findAll();
 
-  void save(Ticket ticket);
+  Ticket save(Ticket ticket);
 }

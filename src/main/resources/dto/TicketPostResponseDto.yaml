@@ -1,0 +1,24 @@
+type: object
+properties:
+  id:
+    type: integer
+    format: int64
+  title:
+    type: string
+  description:
+    type: string
+  reporterId:
+    type: integer
+    format: int64
+  assigneeId:
+    type: integer
+    format: int64
+  statusId:
+    type: integer
+    format: int64
+  createdAt:
+    type: string
+    format: date-time
+  priorityId:
+    type: integer
+    format: int64

@@ -32,3 +32,7 @@ paths:
       responses:
         201:
           description: Ticket created successfully
+          content:
+            application/json:
+              schema:
+                $ref: './dto/TicketPostResponseDto.yaml'
