@@ -1,7 +1,8 @@
 package com.rexdelf.issuetrackerapp.controllers;
 
 import com.rexdelf.issuetrackerapp.dto.TicketDto;
-import com.rexdelf.issuetrackerapp.mapper.TicketDtoMapper;
+import com.rexdelf.issuetrackerapp.dto.TicketPostDto;
+import com.rexdelf.issuetrackerapp.mapper.TicketMapper;
 import com.rexdelf.issuetrackerapp.models.Ticket;
 import com.rexdelf.issuetrackerapp.services.TicketService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TicketController implements TicketsApi {
 
-  private final TicketDtoMapper mapper;
+  private final TicketMapper mapper;
   private final TicketService ticketService;
 
   @GetMapping
@@ -28,9 +29,16 @@ public class TicketController implements TicketsApi {
     List<Ticket> tickets = ticketService.findAll();
 
     List<TicketDto> ticketsDto = tickets.stream()
-        .map(mapper::toTicketDto)
+        .map(mapper::ticketToTicketDto)
         .toList();
 
     return new ResponseEntity<>(ticketsDto, HttpStatus.OK);
+  }
+
+  @PostMapping
+  public ResponseEntity<Void> createTicket(@RequestBody TicketPostDto ticketPostDto){
+    Ticket ticket = mapper.ticketPostDtoToTicket(ticketPostDto);
+    ticketService.save(ticket);
+    return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 }

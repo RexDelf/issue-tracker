@@ -5,7 +5,7 @@ info:
 paths:
   /tickets:
     get:
-      summary: get all tickets
+      summary: Get all tickets
       operationId: getAll
       tags:
         - tickets
@@ -18,3 +18,17 @@ paths:
                 type: array
                 items:
                   $ref: './dto/TicketDto.yaml'
+    post:
+      summary: Create a new ticket
+      operationId: createTicket
+      tags:
+        - tickets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './dto/TicketPostDto.yaml'
+      responses:
+        201:
+          description: Ticket created successfully
