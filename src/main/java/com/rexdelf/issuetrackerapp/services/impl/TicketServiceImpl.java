@@ -4,6 +4,7 @@ import com.rexdelf.issuetrackerapp.models.Ticket;
 import com.rexdelf.issuetrackerapp.repositories.TicketRepository;
 import com.rexdelf.issuetrackerapp.services.TicketService;
 import jakarta.transaction.Transactional;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,10 @@ public class TicketServiceImpl implements TicketService {
 
   public Ticket save(Ticket ticket){
     return ticketRepository.save(ticket);
+  }
+
+  public Optional<Ticket> findById(Long id) {
+    return ticketRepository.findById(id);
   }
 
   public List<Ticket> findAll() {
