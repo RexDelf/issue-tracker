@@ -36,3 +36,30 @@ paths:
             application/json:
               schema:
                 $ref: './dto/TicketPostResponseDto.yaml'
+  /tickets/{id}:
+    get:
+      summary: Get ticket by ID
+      operationId: getTicket
+      tags:
+        - tickets
+      parameters:
+        - name: id
+          in: path
+          description: Ticket ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: './dto/TicketDto.yaml'
+        '404':
+          description: Ticket for the specified id not found
+          content:
+            text/plain:
+              schema:
+                type: string
