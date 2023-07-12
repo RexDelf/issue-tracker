@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-@RequestMapping("/api/tickets")
 @RestController
 @RequiredArgsConstructor
 public class TicketController implements TicketsApi {
@@ -29,6 +28,7 @@ public class TicketController implements TicketsApi {
   private final TicketMapper mapper;
   private final TicketService ticketService;
 
+  @Override
   public ResponseEntity<List<TicketDto>> getAll() {
     List<Ticket> tickets = ticketService.findAll();
 
@@ -39,6 +39,7 @@ public class TicketController implements TicketsApi {
     return new ResponseEntity<>(ticketsDto, HttpStatus.OK);
   }
 
+  @Override
   public ResponseEntity<TicketDto> getTicket(@PathVariable Long id){
     Ticket optionalTicket = ticketService.findById(id)
         .orElseThrow(() -> new NotFoundException("Entity not found for id: " + id));
@@ -48,6 +49,7 @@ public class TicketController implements TicketsApi {
     return new ResponseEntity<>(ticketDto, HttpStatus.OK);
   }
 
+  @Override
   public ResponseEntity<TicketPostResponseDto> createTicket(@RequestBody TicketPostDto ticketPostDto){
     Ticket savedTicket = ticketService.save(mapper.ticketPostDtoToTicket(ticketPostDto));
 
