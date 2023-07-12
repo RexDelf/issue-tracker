@@ -7,18 +7,14 @@ properties:
     type: string
   description:
     type: string
-  reporterName:
-    type: string
-  reporterSurname:
-    type: string
-  assigneeName:
-    type: string
-  assigneeSurname:
-    type: string
+  reporter:
+    $ref: './UserNestedGetDto.yaml'
+  assignee:
+    $ref: './UserNestedGetDto.yaml'
   status:
-    type: string
+    $ref: './StatusNestedGetDto.yaml'
+  priority:
+    $ref: './PriorityNestedGetDto.yaml'
   createdAt:
     type: string
     format: date-time
-  priority:
-    type: string
