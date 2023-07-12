@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+@RequestMapping("/api")
 @RestController
 @RequiredArgsConstructor
 public class TicketController implements TicketsApi {
