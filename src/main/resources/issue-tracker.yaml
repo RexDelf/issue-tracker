@@ -99,6 +99,6 @@ paths:
               schema:
                 type: string
         '400':
-          description: Bad Request - JsonPatchException or other client-side errors
+          description: Bad Request - JsonPatchException
         '500':
-          description: Internal Server Error - IOException or other server-side errors
+          description: Internal Server Error - IOException
