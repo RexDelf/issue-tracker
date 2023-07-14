@@ -3,7 +3,7 @@ package com.rexdelf.issuetrackerapp.controllers;
 import static org.springframework.http.HttpStatus.CREATED;
 
 import com.github.fge.jsonpatch.JsonPatchException;
-import com.rexdelf.issuetrackerapp.dto.JsonPatchOperation;
+import com.rexdelf.issuetrackerapp.dto.JsonPatchWrapper;
 import com.rexdelf.issuetrackerapp.dto.TicketDto;
 import com.rexdelf.issuetrackerapp.dto.TicketPostDto;
 import com.rexdelf.issuetrackerapp.dto.TicketPostResponseDto;
@@ -69,7 +69,7 @@ public class TicketController implements TicketsApi {
   }
 
   @Override
-  public ResponseEntity<TicketDto> updateTicket(@PathVariable Long id, @RequestBody List<JsonPatchOperation> patch)
+  public ResponseEntity<TicketDto> updateTicket(@PathVariable Long id, @RequestBody JsonPatchWrapper patch)
       throws JsonPatchException, IOException {
 
       Ticket ticket = ticketService.findById(id)

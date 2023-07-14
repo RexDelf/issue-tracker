@@ -63,6 +63,7 @@ paths:
             text/plain:
               schema:
                 type: string
+  /tickets/patch/{id}:
     patch:
       summary: Update ticket by ID
       description: Apply a JSON Patch to a Ticket with the specified ID.
@@ -82,9 +83,7 @@ paths:
         content:
           application/json-patch+json:
             schema:
-              type: array
-              items:
-                $ref: './dto/JsonPatchOperation.yaml'
+              $ref: './dto/JsonPatchWrapper.yaml'
       responses:
         200:
           description: OK
@@ -99,13 +98,7 @@ paths:
               schema:
                 type: string
         '400':
-          description: Bad Request - JsonPatchException
-          content:
-            text/plain:
-              schema:
-                type: string
-        '500':
-          description: Internal Server Error - IOException
+          description: Bad Request
           content:
             text/plain:
               schema:
