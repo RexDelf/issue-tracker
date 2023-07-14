@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import com.rexdelf.issuetrackerapp.dto.JsonPatchWrapper;
+import com.rexdelf.issuetrackerapp.dto.TicketPatchDto;
+import com.rexdelf.issuetrackerapp.mapper.TicketMapper;
 import com.rexdelf.issuetrackerapp.models.Ticket;
 import com.rexdelf.issuetrackerapp.repositories.TicketRepository;
 import com.rexdelf.issuetrackerapp.services.TicketService;
@@ -21,7 +23,15 @@ public class TicketServiceImpl implements TicketService {
 
   private final TicketRepository ticketRepository;
 
+  private final TicketMapper mapper;
+
   private final ObjectMapper objectMapper;
+
+  public Ticket applyPatch(Ticket targetTicket, TicketPatchDto ticketPatchDto){
+    Ticket patchedTicket = mapper.patchTicket(targetTicket, ticketPatchDto);
+
+    return ticketRepository.save(patchedTicket);
+  }
 
   public Ticket applyPatch(JsonPatchWrapper patch, Ticket targetTicket) throws JsonPatchException, IOException {
     JsonNode operationsNode = objectMapper.valueToTree(patch.getPatchArray());

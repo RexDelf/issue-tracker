@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 import com.github.fge.jsonpatch.JsonPatchException;
 import com.rexdelf.issuetrackerapp.dto.JsonPatchWrapper;
 import com.rexdelf.issuetrackerapp.dto.TicketDto;
+import com.rexdelf.issuetrackerapp.dto.TicketPatchDto;
 import com.rexdelf.issuetrackerapp.dto.TicketPostDto;
 import com.rexdelf.issuetrackerapp.dto.TicketPostResponseDto;
 import com.rexdelf.issuetrackerapp.exceptions.NotFoundException;
@@ -28,7 +29,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequiredArgsConstructor
 public class TicketController implements TicketsApi {
-
+  private static final String NOT_FOUND_FOR_ID = "Entity not found for id: ";
   private final TicketMapper mapper;
   private final TicketService ticketService;
 
@@ -46,7 +47,7 @@ public class TicketController implements TicketsApi {
   @Override
   public ResponseEntity<TicketDto> getTicket(@PathVariable Long id){
     Ticket optionalTicket = ticketService.findById(id)
-        .orElseThrow(() -> new NotFoundException("Entity not found for id: " + id));
+        .orElseThrow(() -> new NotFoundException(NOT_FOUND_FOR_ID + id));
 
     TicketDto ticketDto = mapper.ticketToTicketDto(optionalTicket);
 
@@ -69,11 +70,22 @@ public class TicketController implements TicketsApi {
   }
 
   @Override
-  public ResponseEntity<TicketDto> updateTicket(@PathVariable Long id, @RequestBody JsonPatchWrapper patch)
+  public ResponseEntity<TicketDto> updateTicket(@PathVariable Long id, @RequestBody TicketPatchDto patch) {
+
+    Ticket ticket = ticketService.findById(id)
+        .orElseThrow(() -> new NotFoundException(NOT_FOUND_FOR_ID + id));
+
+    Ticket patchedTicket = ticketService.applyPatch(ticket, patch);
+
+    return new ResponseEntity<>(mapper.ticketToTicketDto(patchedTicket), HttpStatus.OK);
+  }
+
+  @Override
+  public ResponseEntity<TicketDto> jsonPatchTicket(@PathVariable Long id, @RequestBody JsonPatchWrapper patch)
       throws JsonPatchException, IOException {
 
       Ticket ticket = ticketService.findById(id)
-          .orElseThrow(() -> new NotFoundException("Entity not found for id: " + id));
+          .orElseThrow(() -> new NotFoundException(NOT_FOUND_FOR_ID + id));
 
       Ticket patchedTicket = ticketService.applyPatch(patch, ticket);
 
