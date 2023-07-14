@@ -1,0 +1,14 @@
+type: object
+properties:
+  op:
+    type: string
+    enum: [add, remove, replace, move, copy, test]
+  path:
+    type: string
+  from:
+    type: string
+  value:
+    type: string
+required:
+  - op
+  - path

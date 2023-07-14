@@ -63,3 +63,42 @@ paths:
             text/plain:
               schema:
                 type: string
+    patch:
+      summary: Update ticket by ID
+      description: Apply a JSON Patch to a Ticket with the specified ID.
+      operationId: updateTicket
+      tags:
+        - tickets
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: The ID of the Ticket to be patched.
+      requestBody:
+        required: true
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: './dto/JsonPatchOperation.yaml'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: './dto/TicketDto.yaml'
+        '404':
+          description: Ticket for the specified id not found
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Bad Request - JsonPatchException or other client-side errors
+        '500':
+          description: Internal Server Error - IOException or other server-side errors

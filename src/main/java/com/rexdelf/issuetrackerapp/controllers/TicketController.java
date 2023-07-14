@@ -2,8 +2,8 @@ package com.rexdelf.issuetrackerapp.controllers;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
-import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
+import com.rexdelf.issuetrackerapp.dto.JsonPatchOperation;
 import com.rexdelf.issuetrackerapp.dto.TicketDto;
 import com.rexdelf.issuetrackerapp.dto.TicketPostDto;
 import com.rexdelf.issuetrackerapp.dto.TicketPostResponseDto;
@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,15 +68,15 @@ public class TicketController implements TicketsApi {
         .body(mapper.ticketToTicketPostResponseDto(savedTicket));
   }
 
-  @PatchMapping(path = "/tickets/{id}", consumes = "application/json-patch+json")
-  public ResponseEntity<Ticket> updateTicket(@PathVariable Long id, @RequestBody JsonPatch patch) throws JsonPatchException, IOException {
+  @Override
+  public ResponseEntity<TicketDto> updateTicket(@PathVariable Long id, @RequestBody List<JsonPatchOperation> patch)
+      throws JsonPatchException, IOException {
+
       Ticket ticket = ticketService.findById(id)
           .orElseThrow(() -> new NotFoundException("Entity not found for id: " + id));
 
-      Ticket ticketPatched = ticketService.applyPatch(patch, ticket);
+      Ticket patchedTicket = ticketService.applyPatch(patch, ticket);
 
-      ticketService.save(ticketPatched);
-
-      return new ResponseEntity<>(ticketPatched, HttpStatus.OK);
+      return new ResponseEntity<>(mapper.ticketToTicketDto(patchedTicket), HttpStatus.OK);
   }
 }

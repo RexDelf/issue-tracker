@@ -138,6 +138,7 @@
                 ApiUtil.java
               </supportingFilesToGenerate>
               <configOptions>
+                <unhandledException>true</unhandledException>
                 <delegatePattern>true</delegatePattern>
               </configOptions>
             </configuration>

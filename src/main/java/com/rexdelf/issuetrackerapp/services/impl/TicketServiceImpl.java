@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
+import com.rexdelf.issuetrackerapp.dto.JsonPatchOperation;
 import com.rexdelf.issuetrackerapp.models.Ticket;
 import com.rexdelf.issuetrackerapp.repositories.TicketRepository;
 import com.rexdelf.issuetrackerapp.services.TicketService;
-import jakarta.transaction.Transactional;
 import java.io.IOException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +23,16 @@ public class TicketServiceImpl implements TicketService {
 
   private final ObjectMapper objectMapper;
 
-  public Ticket applyPatch(JsonPatch patch, Ticket targetTicket) throws JsonPatchException, IOException {
-    JsonNode patched = patch.apply(objectMapper.convertValue(targetTicket, JsonNode.class));
-    return objectMapper.treeToValue(patched, Ticket.class);
+  public Ticket applyPatch(List<JsonPatchOperation> patch, Ticket targetTicket) throws JsonPatchException, IOException {
+
+    JsonNode operationsNode = objectMapper.valueToTree(patch);
+
+    JsonPatch patchJson = JsonPatch.fromJson(operationsNode);
+
+    JsonNode patched = patchJson.apply(objectMapper.convertValue(targetTicket, JsonNode.class));
+    Ticket patchedTicket = objectMapper.treeToValue(patched, Ticket.class);
+
+    return ticketRepository.save(patchedTicket);
   }
 
   public Ticket save(Ticket ticket){

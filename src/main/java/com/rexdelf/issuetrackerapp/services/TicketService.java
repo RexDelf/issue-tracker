@@ -1,7 +1,7 @@
 package com.rexdelf.issuetrackerapp.services;
 
-import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
+import com.rexdelf.issuetrackerapp.dto.JsonPatchOperation;
 import com.rexdelf.issuetrackerapp.models.Ticket;
 
 import java.io.IOException;
@@ -13,7 +13,7 @@ public interface TicketService {
 
   Optional<Ticket> findById(Long id);
 
-  Ticket applyPatch(JsonPatch patch, Ticket targetTicket) throws JsonPatchException, IOException;
+  Ticket applyPatch(List<JsonPatchOperation> patch, Ticket targetTicket) throws JsonPatchException, IOException;
 
   Ticket save(Ticket ticket);
 }
