@@ -8,7 +8,6 @@ import com.rexdelf.issuetrackerapp.dto.TicketDto;
 import com.rexdelf.issuetrackerapp.dto.TicketPatchDto;
 import com.rexdelf.issuetrackerapp.dto.TicketPostDto;
 import com.rexdelf.issuetrackerapp.dto.TicketPostResponseDto;
-import com.rexdelf.issuetrackerapp.exceptions.NotFoundException;
 import com.rexdelf.issuetrackerapp.mapper.TicketMapper;
 import com.rexdelf.issuetrackerapp.models.Ticket;
 import com.rexdelf.issuetrackerapp.services.TicketService;
@@ -29,7 +28,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequiredArgsConstructor
 public class TicketController implements TicketsApi {
-  private static final String NOT_FOUND_FOR_ID = "Entity not found for id: ";
   private final TicketMapper mapper;
   private final TicketService ticketService;
 
@@ -46,12 +44,9 @@ public class TicketController implements TicketsApi {
 
   @Override
   public ResponseEntity<TicketDto> getTicket(@PathVariable Long id){
-    Ticket optionalTicket = ticketService.findById(id)
-        .orElseThrow(() -> new NotFoundException(NOT_FOUND_FOR_ID + id));
+    Ticket ticket = ticketService.findById(id);
 
-    TicketDto ticketDto = mapper.ticketToTicketDto(optionalTicket);
-
-    return new ResponseEntity<>(ticketDto, HttpStatus.OK);
+    return new ResponseEntity<>(mapper.ticketToTicketDto(ticket), HttpStatus.OK);
   }
 
   @Override
@@ -72,10 +67,7 @@ public class TicketController implements TicketsApi {
   @Override
   public ResponseEntity<TicketDto> updateTicket(@PathVariable Long id, @RequestBody TicketPatchDto patch) {
 
-    Ticket ticket = ticketService.findById(id)
-        .orElseThrow(() -> new NotFoundException(NOT_FOUND_FOR_ID + id));
-
-    Ticket patchedTicket = ticketService.applyPatch(ticket, patch);
+    Ticket patchedTicket = ticketService.applyPatch(patch, id);
 
     return new ResponseEntity<>(mapper.ticketToTicketDto(patchedTicket), HttpStatus.OK);
   }
@@ -84,10 +76,7 @@ public class TicketController implements TicketsApi {
   public ResponseEntity<TicketDto> jsonPatchTicket(@PathVariable Long id, @RequestBody JsonPatchWrapper patch)
       throws JsonPatchException, IOException {
 
-      Ticket ticket = ticketService.findById(id)
-          .orElseThrow(() -> new NotFoundException(NOT_FOUND_FOR_ID + id));
-
-      Ticket patchedTicket = ticketService.applyPatch(patch, ticket);
+      Ticket patchedTicket = ticketService.applyPatch(patch, id);
 
       return new ResponseEntity<>(mapper.ticketToTicketDto(patchedTicket), HttpStatus.OK);
   }

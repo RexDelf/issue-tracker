@@ -6,12 +6,12 @@ import com.github.fge.jsonpatch.JsonPatch;
 import com.github.fge.jsonpatch.JsonPatchException;
 import com.rexdelf.issuetrackerapp.dto.JsonPatchWrapper;
 import com.rexdelf.issuetrackerapp.dto.TicketPatchDto;
+import com.rexdelf.issuetrackerapp.exceptions.NotFoundException;
 import com.rexdelf.issuetrackerapp.mapper.TicketMapper;
 import com.rexdelf.issuetrackerapp.models.Ticket;
 import com.rexdelf.issuetrackerapp.repositories.TicketRepository;
 import com.rexdelf.issuetrackerapp.services.TicketService;
 import java.io.IOException;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -27,13 +27,17 @@ public class TicketServiceImpl implements TicketService {
 
   private final ObjectMapper objectMapper;
 
-  public Ticket applyPatch(Ticket targetTicket, TicketPatchDto ticketPatchDto){
+  public Ticket applyPatch(TicketPatchDto ticketPatchDto, Long id){
+    Ticket targetTicket = findById(id);
+
     Ticket patchedTicket = mapper.patchTicket(targetTicket, ticketPatchDto);
 
     return ticketRepository.save(patchedTicket);
   }
 
-  public Ticket applyPatch(JsonPatchWrapper patch, Ticket targetTicket) throws JsonPatchException, IOException {
+  public Ticket applyPatch(JsonPatchWrapper patch, Long id) throws JsonPatchException, IOException {
+    Ticket targetTicket = findById(id);
+
     JsonNode operationsNode = objectMapper.valueToTree(patch.getPatchArray());
 
     JsonPatch patchJson = JsonPatch.fromJson(operationsNode);
@@ -48,8 +52,9 @@ public class TicketServiceImpl implements TicketService {
     return ticketRepository.save(ticket);
   }
 
-  public Optional<Ticket> findById(Long id) {
-    return ticketRepository.findById(id);
+  public Ticket findById(Long id) {
+    return ticketRepository.findById(id)
+        .orElseThrow(() -> new NotFoundException("Ticket not found for id: " + id));
   }
 
   public List<Ticket> findAll() {
