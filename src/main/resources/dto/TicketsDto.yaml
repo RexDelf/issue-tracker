@@ -1,0 +1,7 @@
+type: object
+properties:
+  ticketsArray:
+    schema:
+      type: array
+      items:
+        $ref: './TicketDto.yaml'

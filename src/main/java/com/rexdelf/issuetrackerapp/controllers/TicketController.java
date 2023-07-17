@@ -8,6 +8,7 @@ import com.rexdelf.issuetrackerapp.dto.TicketDto;
 import com.rexdelf.issuetrackerapp.dto.TicketPatchDto;
 import com.rexdelf.issuetrackerapp.dto.TicketPostDto;
 import com.rexdelf.issuetrackerapp.dto.TicketPostResponseDto;
+import com.rexdelf.issuetrackerapp.dto.TicketsDto;
 import com.rexdelf.issuetrackerapp.mapper.TicketMapper;
 import com.rexdelf.issuetrackerapp.models.Ticket;
 import com.rexdelf.issuetrackerapp.services.TicketService;
@@ -28,29 +29,32 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @RestController
 @RequiredArgsConstructor
 public class TicketController implements TicketsApi {
+
   private final TicketMapper mapper;
   private final TicketService ticketService;
 
   @Override
-  public ResponseEntity<List<TicketDto>> getAll() {
+  public ResponseEntity<TicketsDto> getAll() {
     List<Ticket> tickets = ticketService.findAll();
 
-    List<TicketDto> ticketsDto = tickets.stream()
+    TicketsDto ticketsDto = new TicketsDto();
+
+    ticketsDto.setTicketsArray(tickets.stream()
         .map(mapper::ticketToTicketDto)
-        .toList();
+        .toList());
 
     return new ResponseEntity<>(ticketsDto, HttpStatus.OK);
   }
 
   @Override
-  public ResponseEntity<TicketDto> getTicket(@PathVariable Long id){
+  public ResponseEntity<TicketDto> getTicket(@PathVariable Long id) {
     Ticket ticket = ticketService.findById(id);
 
     return new ResponseEntity<>(mapper.ticketToTicketDto(ticket), HttpStatus.OK);
   }
 
   @Override
-  public ResponseEntity<TicketPostResponseDto> createTicket(@RequestBody TicketPostDto ticketPostDto){
+  public ResponseEntity<TicketPostResponseDto> createTicket(@RequestBody TicketPostDto ticketPostDto) {
     Ticket savedTicket = ticketService.save(mapper.ticketPostDtoToTicket(ticketPostDto));
 
     String location = ServletUriComponentsBuilder
@@ -76,8 +80,8 @@ public class TicketController implements TicketsApi {
   public ResponseEntity<TicketDto> jsonPatchTicket(@PathVariable Long id, @RequestBody JsonPatchWrapper patch)
       throws JsonPatchException, IOException {
 
-      Ticket patchedTicket = ticketService.applyPatch(patch, id);
+    Ticket patchedTicket = ticketService.applyPatch(patch, id);
 
-      return new ResponseEntity<>(mapper.ticketToTicketDto(patchedTicket), HttpStatus.OK);
+    return new ResponseEntity<>(mapper.ticketToTicketDto(patchedTicket), HttpStatus.OK);
   }
 }
