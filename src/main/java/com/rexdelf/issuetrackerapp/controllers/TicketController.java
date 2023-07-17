@@ -39,7 +39,7 @@ public class TicketController implements TicketsApi {
 
     TicketsDto ticketsDto = new TicketsDto();
 
-    ticketsDto.setTicketsArray(tickets.stream()
+    ticketsDto.setItems(tickets.stream()
         .map(mapper::ticketToTicketDto)
         .toList());
 

@@ -38,7 +38,7 @@ public class TicketServiceImpl implements TicketService {
   public Ticket applyPatch(JsonPatchWrapper patch, Long id) throws JsonPatchException, IOException {
     Ticket targetTicket = findById(id);
 
-    JsonNode operationsNode = objectMapper.valueToTree(patch.getPatchArray());
+    JsonNode operationsNode = objectMapper.valueToTree(patch.getItems());
 
     JsonPatch patchJson = JsonPatch.fromJson(operationsNode);
 

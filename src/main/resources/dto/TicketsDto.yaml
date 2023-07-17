@@ -1,6 +1,6 @@
 type: object
 properties:
-  ticketsArray:
+  items:
     schema:
       type: array
       items:
