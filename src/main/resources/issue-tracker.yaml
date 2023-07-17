@@ -1,0 +1,136 @@
+openapi: "3.0.0"
+info:
+  title: Issue Tracker API
+  version: 0.2.0
+paths:
+  /tickets:
+    get:
+      summary: Get all tickets
+      operationId: getAll
+      tags:
+        - tickets
+      responses:
+        '200':
+          description: A list of TicketDto objects
+          content:
+            application/json:
+              schema:
+                $ref: './dto/TicketsDto.yaml'
+    post:
+      summary: Create a new ticket
+      operationId: createTicket
+      tags:
+        - tickets
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './dto/TicketPostDto.yaml'
+      responses:
+        201:
+          description: Ticket created successfully
+          content:
+            application/json:
+              schema:
+                $ref: './dto/TicketPostResponseDto.yaml'
+  /tickets/{id}:
+    get:
+      summary: Get ticket by ID
+      operationId: getTicket
+      tags:
+        - tickets
+      parameters:
+        - name: id
+          in: path
+          description: Ticket ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: './dto/TicketDto.yaml'
+        '404':
+          description: Ticket for the specified id not found
+          content:
+            text/plain:
+              schema:
+                type: string
+    patch:
+      summary: Update ticket by ID
+      description: Apply a Patch to a Ticket with the specified ID.
+      operationId: updateTicket
+      tags:
+        - tickets
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: The ID of the Ticket to be patched.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './dto/TicketPatchDto.yaml'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: './dto/TicketDto.yaml'
+        '404':
+          description: Ticket for the specified id not found
+          content:
+            text/plain:
+              schema:
+                type: string
+  /tickets/json-patch/{id}:
+    patch:
+      summary: Update ticket by ID
+      description: Apply a JSON Patch to a Ticket with the specified ID.
+      operationId: jsonPatchTicket
+      tags:
+        - tickets
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: The ID of the Ticket to be patched.
+      requestBody:
+        required: true
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: './dto/JsonPatchWrapper.yaml'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: './dto/TicketDto.yaml'
+        '404':
+          description: Ticket for the specified id not found
+          content:
+            text/plain:
+              schema:
+                type: string
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                type: string

@@ -1,0 +1,16 @@
+type: object
+properties:
+  title:
+    type: string
+  description:
+    type: string
+  assigneeId:
+    type: integer
+    format: int64
+  statusId:
+    type: integer
+    format: int64
+  priorityId:
+    type: integer
+    format: int64
+  

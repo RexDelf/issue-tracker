@@ -1,0 +1,20 @@
+type: object
+properties:
+  id:
+    type: integer
+    format: int64
+  title:
+    type: string
+  description:
+    type: string
+  reporter:
+    $ref: './UserNestedGetDto.yaml'
+  assignee:
+    $ref: './UserNestedGetDto.yaml'
+  status:
+    $ref: './StatusNestedGetDto.yaml'
+  priority:
+    $ref: './PriorityNestedGetDto.yaml'
+  createdAt:
+    type: string
+    format: date-time
