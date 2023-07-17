@@ -1,5 +1,6 @@
 package com.rexdelf.issuetrackerapp.handler;
 
+import com.github.fge.jsonpatch.JsonPatchException;
 import com.rexdelf.issuetrackerapp.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,5 +13,10 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(NotFoundException.class)
   public ResponseEntity<String> handleNotFoundException(NotFoundException ex) {
     return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(JsonPatchException.class)
+  public ResponseEntity<String> handleJsonPatchException(JsonPatchException ex) {
+    return new ResponseEntity<>("Failed to apply JSON patch", HttpStatus.BAD_REQUEST);
   }
 }
