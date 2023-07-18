@@ -1,12 +1,12 @@
 openapi: "3.0.0"
 info:
   title: Issue Tracker API
-  version: 0.2.0
+  version: 0.3.0
 paths:
   /tickets:
     get:
       summary: Get all tickets
-      operationId: getAll
+      operationId: getAllTickets
       tags:
         - tickets
       responses:
@@ -130,6 +130,77 @@ paths:
                 type: string
         '400':
           description: Bad Request
+          content:
+            text/plain:
+              schema:
+                type: string
+  /sprints:
+    get:
+      summary: Get all sprints
+      operationId: getAllSprints
+      tags:
+        - sprints
+      responses:
+        '200':
+          description: A list of SprintDto objects
+          content:
+            application/json:
+              schema:
+                $ref: './dto/SprintsDto.yaml'
+    post:
+      summary: Create a new sprint
+      operationId: createSprint
+      tags:
+        - sprints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './dto/SprintPostDto.yaml'
+      responses:
+        201:
+          description: Sprint created successfully
+          content:
+            application/json:
+              schema:
+                $ref: './dto/SprintDto.yaml'
+        400:
+          description: Provided request contains illegal arguments
+          content:
+            text/plain:
+              schema:
+                type: string
+  /sprints/{id}:
+    patch:
+      summary: Update sprint by ID
+      description: Apply a Patch to a Sprint with the specified ID.
+      operationId: updateSprint
+      tags:
+        - sprints
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: The ID of the Sprint to be patched.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './dto/SprintPatchDto.yaml'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: './dto/SprintDto.yaml'
+        '404':
+          description: Sprint for the specified id not found
           content:
             text/plain:
               schema:
