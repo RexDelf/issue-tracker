@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
   }
 
   @ExceptionHandler(ModificationNotAllowedException.class)
-  public ResponseEntity<String> handleForbidden(InvalidDateException ex) {
-    return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
+  public ResponseEntity<String> handleConflict(InvalidDateException ex) {
+    return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
   }
 }

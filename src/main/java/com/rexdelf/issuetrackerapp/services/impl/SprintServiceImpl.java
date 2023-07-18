@@ -62,16 +62,16 @@ public class SprintServiceImpl implements SprintService{
   }
 
   public Sprint save(SprintPostDto sprintPostDto){
-    validateDates(sprintPostDto.getStartDate(), sprintPostDto.getEndDate());
-
     if(sprintPostDto.getEndDate() == null){
       sprintPostDto.setEndDate(sprintPostDto.getStartDate().plusDays(defaultSprintLength));
     }
 
+    validateDates(sprintPostDto.getStartDate(), sprintPostDto.getEndDate());
+
     return sprintRepository.save(mapper.sprintPostDtoToSprint(sprintPostDto));
   }
 
-  public void validateDates(LocalDate startDate, LocalDate endDate){
+  private void validateDates(LocalDate startDate, LocalDate endDate){
     if(!sprintValidator.validateStartDate(startDate)){
       throw new InvalidDateException("Start date cannot be in the past");
     }
