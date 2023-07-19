@@ -35,7 +35,7 @@ public class SprintServiceImpl implements SprintService{
   }
 
   @Override
-  public Sprint deleteById(Long id){
+  public void deleteById(Long id){
     Sprint sprint = findById(id);
 
     if(!sprintValidator.isScheduled(sprint.getStartDate())){
@@ -43,8 +43,6 @@ public class SprintServiceImpl implements SprintService{
     }
 
     sprintRepository.deleteById(id);
-
-    return sprint;
   }
 
   @Override

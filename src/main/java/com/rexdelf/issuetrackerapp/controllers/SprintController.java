@@ -53,9 +53,9 @@ public class SprintController implements SprintsApi{
 
   @Override
   public ResponseEntity<SprintDto> deleteSprint(@PathVariable Long id){
-    Sprint sprint = sprintService.deleteById(id);
+    sprintService.deleteById(id);
 
-    return new ResponseEntity<>(mapper.sprintToSprintDto(sprint), HttpStatus.OK);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
   @Override
