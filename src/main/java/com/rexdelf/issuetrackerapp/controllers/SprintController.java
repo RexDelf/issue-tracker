@@ -6,10 +6,8 @@ import com.rexdelf.issuetrackerapp.dto.SprintDto;
 import com.rexdelf.issuetrackerapp.dto.SprintPostDto;
 import com.rexdelf.issuetrackerapp.dto.SprintPatchDto;
 import com.rexdelf.issuetrackerapp.dto.SprintsDto;
-import com.rexdelf.issuetrackerapp.dto.TicketDto;
 import com.rexdelf.issuetrackerapp.mapper.SprintMapper;
 import com.rexdelf.issuetrackerapp.models.Sprint;
-import com.rexdelf.issuetrackerapp.models.Ticket;
 import com.rexdelf.issuetrackerapp.services.SprintService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -52,7 +50,7 @@ public class SprintController implements SprintsApi{
   }
 
   @Override
-  public ResponseEntity<SprintDto> deleteSprint(@PathVariable Long id){
+  public ResponseEntity<Void> deleteSprint(@PathVariable Long id){
     sprintService.deleteById(id);
 
     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
