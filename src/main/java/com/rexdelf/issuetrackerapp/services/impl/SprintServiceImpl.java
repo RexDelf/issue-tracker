@@ -9,7 +9,6 @@ import com.rexdelf.issuetrackerapp.mapper.SprintMapper;
 import com.rexdelf.issuetrackerapp.models.Sprint;
 import com.rexdelf.issuetrackerapp.repositories.SprintRepository;
 import com.rexdelf.issuetrackerapp.services.SprintService;
-import com.rexdelf.issuetrackerapp.services.validator.SprintValidator;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +20,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SprintServiceImpl implements SprintService{
 
-  @Value("${app.defaultSprintLength}")
+  @Value("${app.defaultSprintDays}")
   private Integer defaultSprintLength;
 
   private final SprintMapper mapper;
@@ -30,22 +29,38 @@ public class SprintServiceImpl implements SprintService{
 
   private final SprintValidator sprintValidator;
 
+  @Override
   public List<Sprint> findAll(){
       return sprintRepository.findAll();
   }
 
+  @Override
+  public Sprint deleteById(Long id){
+    Sprint sprint = findById(id);
+
+    if(!sprintValidator.isScheduled(sprint.getStartDate())){
+      throw new ModificationNotAllowedException("You can't delete completed or active sprints");
+    }
+
+    sprintRepository.deleteById(id);
+
+    return sprint;
+  }
+
+  @Override
   public Sprint findById(Long id){
     return sprintRepository.findById(id)
         .orElseThrow(() -> new NotFoundException("Sprint not found for id: " + id));
   }
+  @Override
   public Sprint applyPatch(SprintPatchDto patch, Long id){
     Sprint targetSprint = findById(id);
 
-    if(sprintValidator.isCompleted(targetSprint.getEndDate())){
+    if(sprintValidator.isInThePast(targetSprint.getEndDate())){
       throw new ModificationNotAllowedException("You can't edit completed sprints");
     }
 
-    if(!sprintValidator.validateStartDate(patch.getStartDate()) && patch.getStartDate() != null){
+    if(sprintValidator.isInThePast(patch.getStartDate()) && patch.getStartDate() != null){
       throw new ModificationNotAllowedException("You can't change the start date of active sprints");
     }
 
@@ -61,6 +76,7 @@ public class SprintServiceImpl implements SprintService{
     return sprintRepository.save(patchedSprint);
   }
 
+  @Override
   public Sprint save(SprintPostDto sprintPostDto){
     if(sprintPostDto.getEndDate() == null){
       sprintPostDto.setEndDate(sprintPostDto.getStartDate().plusDays(defaultSprintLength));
@@ -72,7 +88,7 @@ public class SprintServiceImpl implements SprintService{
   }
 
   private void validateDates(LocalDate startDate, LocalDate endDate){
-    if(!sprintValidator.validateStartDate(startDate)){
+    if(sprintValidator.isInThePast(startDate)){
       throw new InvalidDateException("Start date cannot be in the past");
     }
 

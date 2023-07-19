@@ -6,8 +6,10 @@ import com.rexdelf.issuetrackerapp.dto.SprintDto;
 import com.rexdelf.issuetrackerapp.dto.SprintPostDto;
 import com.rexdelf.issuetrackerapp.dto.SprintPatchDto;
 import com.rexdelf.issuetrackerapp.dto.SprintsDto;
+import com.rexdelf.issuetrackerapp.dto.TicketDto;
 import com.rexdelf.issuetrackerapp.mapper.SprintMapper;
 import com.rexdelf.issuetrackerapp.models.Sprint;
+import com.rexdelf.issuetrackerapp.models.Ticket;
 import com.rexdelf.issuetrackerapp.services.SprintService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -40,6 +42,20 @@ public class SprintController implements SprintsApi{
         .toList());
 
     return new ResponseEntity<>(sprintsDto, HttpStatus.OK);
+  }
+
+  @Override
+  public ResponseEntity<SprintDto> getSprint(@PathVariable Long id) {
+    Sprint sprint = sprintService.findById(id);
+
+    return new ResponseEntity<>(mapper.sprintToSprintDto(sprint), HttpStatus.OK);
+  }
+
+  @Override
+  public ResponseEntity<SprintDto> deleteSprint(@PathVariable Long id){
+    Sprint sprint = sprintService.deleteById(id);
+
+    return new ResponseEntity<>(mapper.sprintToSprintDto(sprint), HttpStatus.OK);
   }
 
   @Override

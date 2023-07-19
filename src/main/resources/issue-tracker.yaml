@@ -205,3 +205,68 @@ paths:
             text/plain:
               schema:
                 type: string
+        '409':
+          description: Can't modify sprint
+          content:
+            text/plain:
+              schema:
+                type: string
+    get:
+      summary: Get sprint by ID
+      operationId: getSprint
+      tags:
+        - sprints
+      parameters:
+        - name: id
+          in: path
+          description: Sprint ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: './dto/SprintDto.yaml'
+        '404':
+          description: Sprint for the specified id not found
+          content:
+            text/plain:
+              schema:
+                type: string
+
+    delete:
+      summary: Delete sprint by id
+      operationId: deleteSprint
+      tags:
+        - sprints
+      parameters:
+        - name: id
+          in: path
+          description: Sprint ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: './dto/SprintDto.yaml'
+        '404':
+          description: Sprint for the specified id not found
+          content:
+            text/plain:
+              schema:
+                type: string
+        '409':
+          description: Can't delete completed or active sprints
+          content:
+            text/plain:
+              schema:
+                type: string

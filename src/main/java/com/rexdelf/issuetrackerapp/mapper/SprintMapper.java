@@ -10,8 +10,8 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring")
-public interface SprintMapper extends BaseMapper{
+@Mapper(componentModel = "spring", uses = {BaseMapper.class})
+public interface SprintMapper{
 
   Sprint sprintPostDtoToSprint(SprintPostDto patch);
 

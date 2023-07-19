@@ -1,4 +1,4 @@
-package com.rexdelf.issuetrackerapp.services.validator;
+package com.rexdelf.issuetrackerapp.services.impl;
 
 import com.rexdelf.issuetrackerapp.models.Sprint;
 import java.time.LocalDate;
@@ -6,14 +6,14 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SprintValidator {
+class SprintValidator {
 
-  public boolean isCompleted(LocalDate endDate){
-    return endDate.isBefore(LocalDate.now());
+  public boolean isInThePast(LocalDate date) {
+    return date.isBefore(LocalDate.now());
   }
 
-  public boolean validateStartDate(LocalDate startDate) {
-    return !startDate.isBefore(LocalDate.now());
+  public boolean isScheduled(LocalDate startDate){
+    return startDate.isAfter(LocalDate.now());
   }
 
   public boolean isAfterStartDate(LocalDate startDate, LocalDate endDate){

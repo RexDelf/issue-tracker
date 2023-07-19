@@ -13,5 +13,7 @@ public interface SprintService {
 
   Sprint save(SprintPostDto patch);
 
+  Sprint deleteById(Long id);
+
   Sprint applyPatch(SprintPatchDto patch, Long id);
 }

@@ -11,8 +11,8 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValueCheckStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
-@Mapper(componentModel = "spring")
-public interface TicketMapper extends BaseMapper{
+@Mapper(componentModel = "spring", uses = {BaseMapper.class})
+public interface TicketMapper{
 
   TicketDto ticketToTicketDto(Ticket ticket);
   @BeanMapping(nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
