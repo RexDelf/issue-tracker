@@ -1,5 +1,6 @@
 package com.rexdelf.issuetrackerapp.services.impl;
 
+import com.rexdelf.issuetrackerapp.dto.SprintPatchDto;
 import com.rexdelf.issuetrackerapp.exceptions.InvalidDateException;
 import com.rexdelf.issuetrackerapp.exceptions.ModificationNotAllowedException;
 import com.rexdelf.issuetrackerapp.models.Sprint;
@@ -16,12 +17,12 @@ class SprintValidatorService {
   private final SprintRepository sprintRepository;
   private final DateValidatorService dateValidatorService;
 
-  public void checkIfModifiable(Sprint sprint){
+  public void checkIfModifiable(Sprint sprint, SprintPatchDto patch){
     if(sprint.getStatus() == SprintStatus.COMPLETED){
       throw new ModificationNotAllowedException("You can't edit completed sprints");
     }
 
-    if(sprint.getStatus() == SprintStatus.ACTIVE && sprint.getStartDate() != null){
+    if(sprint.getStatus() == SprintStatus.ACTIVE && patch.getStartDate() != null){
       throw new ModificationNotAllowedException("You can't change the start date of active sprints");
     }
   }

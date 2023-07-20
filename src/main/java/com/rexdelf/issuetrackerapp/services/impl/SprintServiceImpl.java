@@ -49,7 +49,7 @@ public class SprintServiceImpl implements SprintService{
   public Sprint applyPatch(SprintPatchDto patch, Long id){
     Sprint targetSprint = findById(id);
 
-    sprintValidatorService.checkIfModifiable(targetSprint);
+    sprintValidatorService.checkIfModifiable(targetSprint, patch);
 
     Sprint patchedSprint = mapper.patchSprint(targetSprint, patch);
 
