@@ -17,12 +17,12 @@ class SprintValidatorService {
   private final DateValidatorService dateValidatorService;
 
   public void checkIfModifiable(Sprint sprint){
-    if(sprint.getStatus() == SprintStatus.COMPLETED){
-      throw new ModificationNotAllowedException("You can't edit completed sprints");
+    if(sprint.getStatus() == SprintStatus.ACTIVE && sprint.getStartDate() != null){
+      throw new ModificationNotAllowedException("You can't change the start date of active sprints");
     }
 
-    if(sprint.getStatus() == SprintStatus.ACTIVE){
-      throw new ModificationNotAllowedException("You can't change the start date of active sprints");
+    if(sprint.getStatus() == SprintStatus.COMPLETED){
+      throw new ModificationNotAllowedException("You can't edit completed sprints");
     }
   }
 
