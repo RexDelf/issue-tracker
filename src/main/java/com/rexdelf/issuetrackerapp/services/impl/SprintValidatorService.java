@@ -39,7 +39,7 @@ class SprintValidatorService {
 
     dateValidatorService.notInThePast(startDate);
 
-    dateValidatorService.endDateIsAfterStartDate(startDate, endDate);
+    dateValidatorService.validatePeriod(startDate, endDate);
   }
 
 }

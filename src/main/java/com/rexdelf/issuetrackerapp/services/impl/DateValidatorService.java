@@ -18,7 +18,7 @@ class DateValidatorService {
     }
   }
 
-  public void endDateIsAfterStartDate(LocalDate startDate, LocalDate endDate){
+  public void validatePeriod(LocalDate startDate, LocalDate endDate){
       if (!dateValidator.isAfterStartDate(startDate, endDate)) {
         throw new InvalidDateException("End date must be after start date");
       }
