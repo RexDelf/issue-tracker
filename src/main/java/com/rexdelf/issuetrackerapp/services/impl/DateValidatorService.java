@@ -12,13 +12,15 @@ class DateValidatorService {
 
   private final DateValidator dateValidator;
 
-  public void validateDates(LocalDate startDate, LocalDate endDate){
-    if(dateValidator.isInThePast(startDate)){
-      throw new InvalidDateException("Start date cannot be in the past");
-    }
-
-    if(!dateValidator.isAfterStartDate(startDate, endDate)){
-      throw new InvalidDateException("End date must be after start date");
+  public void notInThePast(LocalDate date) {
+    if (dateValidator.isInThePast(date)) {
+      throw new InvalidDateException("Date cannot be in the past");
     }
   }
+
+  public void endDateIsAfterStartDate(LocalDate startDate, LocalDate endDate){
+      if (!dateValidator.isAfterStartDate(startDate, endDate)) {
+        throw new InvalidDateException("End date must be after start date");
+      }
+    }
 }

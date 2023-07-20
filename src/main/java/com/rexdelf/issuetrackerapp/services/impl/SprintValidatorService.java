@@ -37,7 +37,9 @@ class SprintValidatorService {
       throw new InvalidDateException("Sprint dates can't overlap with existing sprints");
     }
 
-    dateValidatorService.validateDates(startDate, endDate);
+    dateValidatorService.notInThePast(startDate);
+
+    dateValidatorService.endDateIsAfterStartDate(startDate, endDate);
   }
 
 }
