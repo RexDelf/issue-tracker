@@ -154,7 +154,7 @@
               </supportingFilesToGenerate>
               <configOptions>
                 <unhandledException>true</unhandledException>
-                <delegatePattern>true</delegatePattern>
+                <delegatePattern>false</delegatePattern>
               </configOptions>
             </configuration>
           </execution>

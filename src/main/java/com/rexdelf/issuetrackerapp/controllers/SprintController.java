@@ -12,8 +12,6 @@ import com.rexdelf.issuetrackerapp.services.SprintService;
 import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,9 +32,8 @@ public class SprintController implements SprintsApi{
   private final SprintMapper mapper;
 
   @Override
-  public ResponseEntity<SprintsDto> getAllSprints(@RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate startDate,
-                                                  @RequestParam(required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate endDate){
-    List<Sprint> sprints = sprintService.findAll(startDate, endDate);
+  public ResponseEntity<SprintsDto> getAllSprints(@RequestParam(required = false) LocalDate date){
+    List<Sprint> sprints = sprintService.findAll(date);
 
     SprintsDto sprintsDto = new SprintsDto();
 

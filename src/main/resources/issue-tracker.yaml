@@ -142,19 +142,12 @@ paths:
         - sprints
       parameters:
         - in: query
-          name: startDate
+          name: date
           required: false
           schema:
             type: string
             format: date
-          description: The start date of the sprint
-        - in: query
-          name: endDate
-          required: false
-          schema:
-            type: string
-            format: date
-          description: The end date of the sprint
+          description: Get the sprint that falls on the specified date
       responses:
         '200':
           description: A list of SprintDto objects

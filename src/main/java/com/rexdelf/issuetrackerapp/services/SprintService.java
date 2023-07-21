@@ -10,7 +10,7 @@ public interface SprintService {
 
   Sprint findById(Long id);
 
-  List<Sprint> findAll(LocalDate startDate, LocalDate endDate);
+  List<Sprint> findAll(LocalDate date);
 
   Sprint save(SprintPostDto patch);
 

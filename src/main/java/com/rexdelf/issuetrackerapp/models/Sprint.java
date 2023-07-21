@@ -9,10 +9,6 @@ import java.time.LocalDate;
 @Entity
 @Data
 @NoArgsConstructor
-@NamedQuery(
-    name = "Sprint.findBetweenDates",
-    query = "SELECT s FROM Sprint s WHERE (:startDate IS NULL OR s.startDate >= :startDate) AND (:endDate IS NULL OR s.endDate <= :endDate)"
-)
 public class Sprint {
 
   @Id
