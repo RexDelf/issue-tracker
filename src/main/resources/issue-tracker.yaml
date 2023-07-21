@@ -140,6 +140,21 @@ paths:
       operationId: getAllSprints
       tags:
         - sprints
+      parameters:
+        - in: query
+          name: startDate
+          required: false
+          schema:
+            type: string
+            format: date
+          description: The start date of the sprint
+        - in: query
+          name: endDate
+          required: false
+          schema:
+            type: string
+            format: date
+          description: The end date of the sprint
       responses:
         '200':
           description: A list of SprintDto objects

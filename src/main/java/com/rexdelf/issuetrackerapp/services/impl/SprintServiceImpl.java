@@ -7,6 +7,7 @@ import com.rexdelf.issuetrackerapp.mapper.SprintMapper;
 import com.rexdelf.issuetrackerapp.models.Sprint;
 import com.rexdelf.issuetrackerapp.repositories.SprintRepository;
 import com.rexdelf.issuetrackerapp.services.SprintService;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,8 +28,8 @@ public class SprintServiceImpl implements SprintService{
 
 
   @Override
-  public List<Sprint> findAll(){
-      return sprintRepository.findAll();
+  public List<Sprint> findAll(LocalDate startDate, LocalDate endDate){
+      return sprintRepository.findBetweenDates(startDate, endDate);
   }
 
   @Override
