@@ -28,8 +28,12 @@ public class SprintServiceImpl implements SprintService{
 
 
   @Override
-  public List<Sprint> findAll(LocalDate startDate, LocalDate endDate){
-      return sprintRepository.findBetweenDates(startDate, endDate);
+  public List<Sprint> findAll(LocalDate date){
+    if (date == null) {
+      return sprintRepository.findAll();
+    } else {
+      return sprintRepository.findByDate(date);
+    }
   }
 
   @Override
