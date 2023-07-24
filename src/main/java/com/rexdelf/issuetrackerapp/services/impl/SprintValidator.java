@@ -10,6 +10,6 @@ class SprintValidator {
 
   public boolean isOverlappingWithExistingSprint(List<Sprint> sprints, LocalDate date) {
     return sprints.stream()
-        .noneMatch(sprint -> sprint.getEndDate().isAfter(date));
+        .allMatch(sprint -> sprint.getEndDate().isBefore(date));
   }
 }
