@@ -26,4 +26,18 @@ public class Sprint {
 
   @Column(nullable = false, columnDefinition = "TEXT")
   private String goals;
+
+  public SprintStatus getStatus() {
+    LocalDate now = LocalDate.now();
+
+    if (now.isBefore(this.startDate)) {
+      return SprintStatus.SCHEDULED;
+    }
+    else if (now.isAfter(this.endDate)) {
+      return SprintStatus.COMPLETED;
+    }
+    else {
+      return SprintStatus.ACTIVE;
+    }
+  }
 }

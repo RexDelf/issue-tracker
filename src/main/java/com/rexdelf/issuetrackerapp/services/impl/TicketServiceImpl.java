@@ -27,6 +27,7 @@ public class TicketServiceImpl implements TicketService {
 
   private final ObjectMapper objectMapper;
 
+  @Override
   public Ticket applyPatch(TicketPatchDto ticketPatchDto, Long id){
     Ticket targetTicket = findById(id);
 
@@ -35,6 +36,7 @@ public class TicketServiceImpl implements TicketService {
     return ticketRepository.save(patchedTicket);
   }
 
+  @Override
   public Ticket applyPatch(JsonPatchWrapper patch, Long id) throws JsonPatchException, IOException {
     Ticket targetTicket = findById(id);
 
@@ -48,15 +50,18 @@ public class TicketServiceImpl implements TicketService {
     return ticketRepository.save(patchedTicket);
   }
 
+  @Override
   public Ticket save(Ticket ticket){
     return ticketRepository.save(ticket);
   }
 
+  @Override
   public Ticket findById(Long id) {
     return ticketRepository.findById(id)
         .orElseThrow(() -> new NotFoundException("Ticket not found for id: " + id));
   }
 
+  @Override
   public List<Ticket> findAll() {
     return ticketRepository.findAll();
   }

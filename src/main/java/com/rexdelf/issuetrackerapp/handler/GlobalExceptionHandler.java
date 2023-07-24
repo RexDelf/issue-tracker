@@ -1,6 +1,8 @@
 package com.rexdelf.issuetrackerapp.handler;
 
 import com.github.fge.jsonpatch.JsonPatchException;
+import com.rexdelf.issuetrackerapp.exceptions.InvalidDateException;
+import com.rexdelf.issuetrackerapp.exceptions.ModificationNotAllowedException;
 import com.rexdelf.issuetrackerapp.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,17 @@ public class GlobalExceptionHandler {
   }
 
   @ExceptionHandler(JsonPatchException.class)
-  public ResponseEntity<String> handleJsonPatchException(JsonPatchException ex) {
+  public ResponseEntity<String> handleJsonPatchException() {
     return new ResponseEntity<>("Failed to apply JSON patch", HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(InvalidDateException.class)
+  public ResponseEntity<String> handleBadRequest(InvalidDateException ex) {
+    return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(ModificationNotAllowedException.class)
+  public ResponseEntity<String> handleConflict(InvalidDateException ex) {
+    return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
   }
 }

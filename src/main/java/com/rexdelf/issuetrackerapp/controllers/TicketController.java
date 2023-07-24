@@ -34,7 +34,7 @@ public class TicketController implements TicketsApi {
   private final TicketService ticketService;
 
   @Override
-  public ResponseEntity<TicketsDto> getAll() {
+  public ResponseEntity<TicketsDto> getAllTickets() {
     List<Ticket> tickets = ticketService.findAll();
 
     TicketsDto ticketsDto = new TicketsDto();

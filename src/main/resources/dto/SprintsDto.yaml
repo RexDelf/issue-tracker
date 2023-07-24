@@ -1,0 +1,7 @@
+type: object
+properties:
+  items:
+    schema:
+      type: array
+      items:
+        $ref: './SprintDto.yaml'
