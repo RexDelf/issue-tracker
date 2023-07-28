@@ -1,5 +1,6 @@
 package com.rexdelf.issuetrackerapp.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class SprintTicket {
   @Column(name = "ticket_id", nullable = false)
   private Long ticketId;
 
+  @JsonBackReference
   @ManyToOne
   @JoinColumn(name = "sprint_id", referencedColumnName = "id", insertable = false, updatable = false)
   private Sprint sprint;
