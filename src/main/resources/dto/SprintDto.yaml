@@ -13,3 +13,8 @@ properties:
     format: date
   goals:
     type: string
+  sprintTickets:
+    schema:
+      type: array
+      items:
+        $ref: './TicketDto.yaml'

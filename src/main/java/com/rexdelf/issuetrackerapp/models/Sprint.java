@@ -1,6 +1,8 @@
 package com.rexdelf.issuetrackerapp.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -26,6 +28,10 @@ public class Sprint {
 
   @Column(nullable = false, columnDefinition = "TEXT")
   private String goals;
+
+  @JsonManagedReference
+  @OneToMany(mappedBy = "sprint", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private List<SprintTicket> sprintTickets;
 
   public SprintStatus getStatus() {
     LocalDate now = LocalDate.now();
